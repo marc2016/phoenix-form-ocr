@@ -1,4 +1,26 @@
 import uuid
+import re
+
+def clean_label(text: str) -> str:
+    """Removes common Tesseract checkbox artifacts like [[] , L] , oO etc."""
+    if not text: return ""
+    
+    # 1. Strip common multi-character noise at the start that often comes from checkbox borders
+    noise_patterns = [
+        r'^\[+\]*', r'^L\]', r'^J\]', r'^\[J', r'^\[L', r'^oO', r'^Oo', r'^LJ', r'^\[_\]', r'^\[ \]', r'^\[x\]', r'^\[X\]', 
+        r'^[\|Il1]\s', r'^[OUuJj]\s', r'^[a-z]\s' # Single character noise followed by space
+    ]
+    
+    current = text.strip()
+    for pattern in noise_patterns:
+        current = re.sub(pattern, '', current).strip()
+    
+    # 2. Strip standard bracket/separator/noise characters from the very beginning and end
+    # Removed ( and ) from here to preserve labels like Vorname(n)
+    current = current.lstrip('[]{}||-_>.<:  ')
+    current = current.rstrip('[]{}||-_>.<:  ')
+    
+    return current
 
 def id_generator() -> str:
     return str(uuid.uuid4())
@@ -32,7 +54,7 @@ def find_nearest_label(x, y, w, h, is_checkbox, text_blocks, used_tbs_set):
             inside_texts.sort(key=lambda b: (b['y'] // 10, b['x']))
             # Clean up specific label artifacts like '>'
             raw_label = " ".join([b['text'] for b in inside_texts])
-            return raw_label.replace(" >", "").replace(">", "").strip(), inside_texts
+            return clean_label(raw_label), inside_texts
             
     # First pass: try to find label on the right (most common for checkboxes)
     if is_checkbox:
@@ -99,7 +121,7 @@ def find_nearest_label(x, y, w, h, is_checkbox, text_blocks, used_tbs_set):
         line_tbs = line_tbs[left_idx:right_idx+1]
         
     raw_label = " ".join([b['text'] for b in line_tbs])
-    return raw_label.replace(" >", "").replace(">", "").strip(), line_tbs
+    return clean_label(raw_label), line_tbs
 
 def find_heading_above(cx, cy, cw, ch, text_blocks, used_tbs_set):
     best_tb = None
@@ -145,4 +167,4 @@ def find_heading_above(cx, cy, cw, ch, text_blocks, used_tbs_set):
         line_tbs = line_tbs[left_idx:right_idx+1]
         
     raw_label = " ".join([b['text'] for b in line_tbs])
-    return raw_label.replace(" >", "").replace(">", "").strip(), line_tbs
+    return clean_label(raw_label), line_tbs

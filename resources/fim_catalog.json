@@ -1,0 +1,84 @@
+{
+  "version": "1.0.0",
+  "description": "Baseline FIM (Föderales Informationsmanagement) Data Field Catalog for PhoenixForm OCR",
+  "fields": [
+    {
+      "fimId": "person.name.vorname",
+      "label": "Vorname",
+      "description": "Vorname der Person",
+      "semanticType": "string",
+      "tags": ["Stammdaten", "Person"]
+    },
+    {
+      "fimId": "person.name.nachname",
+      "label": "Familienname",
+      "description": "Nachname oder Geburtsname der Person",
+      "semanticType": "string",
+      "tags": ["Stammdaten", "Person"]
+    },
+    {
+      "fimId": "person.geburtsdatum",
+      "label": "Geburtsdatum",
+      "description": "Tag der Geburt",
+      "semanticType": "date",
+      "tags": ["Stammdaten", "Person"]
+    },
+    {
+      "fimId": "anschrift.strasse",
+      "label": "Straße",
+      "description": "Name der Straße der Anschrift",
+      "semanticType": "string",
+      "tags": ["Stammdaten", "Anschrift"]
+    },
+    {
+      "fimId": "anschrift.hausnummer",
+      "label": "Hausnummer",
+      "description": "Hausnummer der Anschrift",
+      "semanticType": "string",
+      "tags": ["Stammdaten", "Anschrift"]
+    },
+    {
+      "fimId": "anschrift.plz",
+      "label": "Postleitzahl",
+      "description": "PLZ der Anschrift",
+      "semanticType": "string",
+      "validation": "^[0-9]{5}$",
+      "tags": ["Stammdaten", "Anschrift"]
+    },
+    {
+      "fimId": "anschrift.ort",
+      "label": "Wohnort",
+      "description": "Ort der Anschrift",
+      "semanticType": "string",
+      "tags": ["Stammdaten", "Anschrift"]
+    },
+    {
+      "fimId": "kontakt.email",
+      "label": "E-Mail-Adresse",
+      "description": "Elektronische Kontaktmöglichkeit",
+      "semanticType": "email",
+      "tags": ["Stammdaten", "Kontakt"]
+    },
+    {
+      "fimId": "kontakt.telefon",
+      "label": "Telefonnummer",
+      "description": "Telefonische Kontaktmöglichkeit",
+      "semanticType": "phone",
+      "tags": ["Stammdaten", "Kontakt"]
+    },
+    {
+      "fimId": "finanzen.iban",
+      "label": "IBAN",
+      "description": "Internationale Bankkontonummer",
+      "semanticType": "iban",
+      "tags": ["Stammdaten", "Bank"]
+    },
+    {
+      "fimId": "finanzen.bic",
+      "label": "BIC",
+      "description": "Bank Identifier Code",
+      "semanticType": "bic",
+      "tags": ["Stammdaten", "Bank"]
+    }
+  ]
+}
